@@ -32,9 +32,35 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'homepage'
+  '/': { view: 'homepage' },
+
+  ////Auth
+  'post /login': 'AuthController.login',
+  '/logout': 'AuthController.logout',
+
+  //// User
+  'get /user': {
+    controller	: 'UserController',
+    action		: 'findAll'
+  },
+  'get /user/:id': {
+    controller	: 'UserController',
+    action		: 'find'
+  },
+  'post /signup': {
+    controller	: 'UserController',
+    action		: 'create'
+  },
+  'put /user/:id': {
+    controller	: 'UserController',
+    action		: 'update'
+  },
+  'delete /user/:id': {
+    controller	: 'UserController',
+    action		: 'destroy'
   }
+
+
 
   /***************************************************************************
   *                                                                          *
