@@ -1,16 +1,24 @@
 /**
- * isAuthenticated
- * @description :: Policy to inject user in req via JSON Web Token
+ * sessionAuth
+ *
+ * @module      :: Policy
+ * @description :: Simple policy to allow any authenticated user
+ *                 Assumes that your login action in one of your controllers sets `req.session.authenticated = true;`
+ * @docs        :: http://sailsjs.org/#!/documentation/concepts/Policies
+ *
  */
-var passport = require('passport');
+module.exports = function(req, res, next) {
 
-module.exports = function (req, res, next) {
-    passport.authenticate('jwt', function (error, user, info) {
-      if (error) return res.serverError(error);
-      if (!user)
-       return res.unauthorized(null, info && info.code, info && info.message);
-     req.user = user;
+  // If `req.session.me` exists, that means the user is logged in.
+  if (req.session.me) return next();
 
-     next();
-    })(req, res);
+  // If this is not an HTML-wanting browser, e.g. AJAX/sockets/cURL/etc.,
+  // send a 401 response letting the user agent know they need to login to
+  // access this endpoint.
+  if (req.wantsJSON) {
+    return res.send(401);
+  }
+
+  // Otherwise if this is an HTML-wanting browser, do a redirect.
+  return res.redirect('/');
 };
