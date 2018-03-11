@@ -23,7 +23,8 @@
         "assets/vendor/font-awesome/css/font-awesome.min.css",
         "assets/vendor/datatables/dataTables.bootstrap4.css",
         "assets/css/sb-admin.css",
-        "styles.css"
+        "styles.css",
+        "../node_modules/ngx-toastr/toastr.css"
       ],
       "scripts": [
         "assets/vendor/jquery/jquery.min.js",

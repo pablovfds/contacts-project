@@ -1,4 +1,4 @@
-var MessageService = {
+module.exports = {
 
   HTTP: {
     OK: 200,
@@ -30,5 +30,3 @@ var MessageService = {
     ERROR_MISSING_NAME: "Bad Request, missing parameter 'name', username is required!"
   }
 };
-
-module.exports = MessageService;

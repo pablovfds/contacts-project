@@ -10,15 +10,14 @@ module.exports = {
    * `UserController.signup()`
    */
   create: function (req, res) {
-    // Attempt to signup a user using the provided parameters
+
     User.create(req.body).exec(function (err, user) {
       if (err) {
         return res.json(err.status, {err: err});
       }
-      // If user created successfuly we return user and token as response
+
       if (user) {
-        // NOTE: payload is { id: user.id}
-        res.json(200, {user: user, token: jwToken.issue({id: user.id})});
+        res.ok({user: user, token: jwToken.issue({id: user.id})});
       }
     });
   },
@@ -37,9 +36,17 @@ module.exports = {
    * `UserController.destroy()`
    */
   destroy: function (req, res) {
-    return res.json({
-      todo: 'destroy() is not implemented yet!'
-    });
+
+    let userId = req.param('id');
+
+    if (!userId) return res.badRequest({ err: 'missing user_id field' });
+
+    User.destroy({ id: userId })
+      .then(_user => {
+        if (!_user || _user.length === 0) return res.notFound({ err: MessageService.USER.ERROR_DELETING_USER });
+        return res.ok(MessageService.HTTP.OK,{msg:MessageService.USER.DELETED});
+      })
+      .catch(err => res.serverError(err));
   },
 
 
@@ -48,37 +55,18 @@ module.exports = {
    */
   find: function (req, res) {
 
-    var responseObject = {};
+    let userId = req.param('id');
 
-    User
-      .findOne(req.param('id'))
-      .exec(function (err, user) {
-        if (err) {
-          responseObject = {
-            status: MessageService.HTTP.SERVER_ERROR,
-            message: MessageService.USER.ERROR_SEARCHING_USER,
-            error: err
-          };
-          return res.serverError(responseObject);
-        }
-        if (user) {
-          // NOTE: payload is { id: user.id}
+    if (!userId) return res.badRequest({ err: 'missing user_id field' });
 
-          responseObject = {
-            status: MessageService.HTTP.OK,
-            user: user
-          };
+    User.findOne({ id: userId })
+      .then(_user => {
 
-          res.json(responseObject)
-        } else {
-          responseObject = {
-            status: MessageService.HTTP.NOT_FOUND,
-            message: MessageService.USER.ERROR_NOT_FOUND
-          };
+        if (!_user) return res.notFound({ err: MessageService.USER.ERROR_NOT_FOUND});
 
-          return res.notFound(responseObject);
-        }
-      });
+        return res.ok(MessageService.HTTP.OK, _user);
+      })
+      .catch(err => res.serverError(err));
   },
 
 
@@ -86,26 +74,17 @@ module.exports = {
    * `UserController.find()`
    */
   findAll: function (req, res) {
-    var responseObject = {};
 
-    User
-      .findOne({})
-      .exec(function (err, users) {
-        if (err) {
-          responseObject = {
-            status: MessageService.HTTP.SERVER_ERROR,
-            message: MessageService.USER.ERROR_SEARCHING_USER,
-            error: err
-          };
-          return res.serverError(responseObject);
+    User.find()
+      .then(_users => {
+
+        if (!_users || _users.length === 0) {
+          return res.notFound({err: MessageService.USER.ERROR_NOT_FOUND});
         }
-        responseObject = {
-          status: MessageService.HTTP.OK,
-          users: users
-        };
+        return res.ok(MessageService.HTTP.OK, _users);
 
-        res.json(responseObject);
-      });
+      })
+      .catch(err => res.serverError(err));
   }
 
 };
