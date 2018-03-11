@@ -13,12 +13,14 @@ import { AppRoutingModule } from './app-routing.module';
 import {AuthService} from './shared/auth/auth.service';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AuthGuard} from "./shared/guards/auth.guard";
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
