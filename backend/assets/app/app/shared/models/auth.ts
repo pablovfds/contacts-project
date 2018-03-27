@@ -1,5 +1,7 @@
+import { User } from './user';
+
 export class Auth {
   message: string;
-  user: string;
+  user: User;
   token: string;
 }
