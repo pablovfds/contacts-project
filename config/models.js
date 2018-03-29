@@ -11,8 +11,9 @@
 
 module.exports.models = {
 
-  connection: 'localMongoDb',
+  // connection: 'localMongoDb',
   // connection: 'localDiskDb',
+  connection: 'remoteMongoDb',
 
   migrate: 'alter'
 

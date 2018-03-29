@@ -25,7 +25,7 @@ module.exports.connections = {
     adapter: 'sails-disk'
   },
 
-  mLabMongoDb: {
+  remoteMongoDb: {
     adapter: 'sails-mongo',
     url: 'mongodb://admin:admin1234@ds147864.mlab.com:47864/swap-games'
   },

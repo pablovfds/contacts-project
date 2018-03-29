@@ -11,7 +11,14 @@ module.exports = {
    */
   create: function (req, res) {
 
-    User.create(req.body).exec(function (err, user) {
+    let user = {
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      photo: User.gravatar(req.body.email)
+    };
+
+    User.create(user).exec(function (err, user) {
       if (err) {
         return res.json(err.status, {err: err});
       }
@@ -44,7 +51,7 @@ module.exports = {
     User.destroy({ id: userId })
       .then(_user => {
         if (!_user || _user.length === 0) return res.notFound({ err: MessageService.USER.ERROR_DELETING_USER });
-        return res.ok(MessageService.HTTP.OK,{msg:MessageService.USER.DELETED});
+        return res.ok({msg:MessageService.USER.DELETED}, MessageService.HTTP.OK);
       })
       .catch(err => res.serverError(err));
   },
@@ -64,7 +71,7 @@ module.exports = {
 
         if (!_user) return res.notFound({ err: MessageService.USER.ERROR_NOT_FOUND});
 
-        return res.ok(MessageService.HTTP.OK, _user);
+        return res.ok(_user, MessageService.HTTP.OK);
       })
       .catch(err => res.serverError(err));
   },
@@ -81,7 +88,7 @@ module.exports = {
         if (!_users || _users.length === 0) {
           return res.notFound({err: MessageService.USER.ERROR_NOT_FOUND});
         }
-        return res.ok(MessageService.HTTP.OK, _users);
+        return res.ok(_users, MessageService.HTTP.OK);
 
       })
       .catch(err => res.serverError(err));
