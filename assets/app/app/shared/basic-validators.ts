@@ -24,14 +24,12 @@ export class BasicValidators {
   }
 
   static Match(firstControlName, secondControlName) {
-    return (AC: AbstractControl) => {
-      let firstControlValue = AC.get(firstControlName).value; // to get value in input tag
-      let secondControlValue = AC.get(secondControlName).value; // to get value in input tag
+    return (ac: AbstractControl) => {
+      let firstControlValue = ac.get(firstControlName).value;
+      let secondControlValue = ac.get(secondControlName).value;
       if (firstControlValue != secondControlValue) {
-        AC.get(secondControlName).setErrors({MatchFields: true});
-        console.log(false);
+        ac.get(secondControlName).setErrors({matchFields: true});
       } else {
-        console.log(true);
         return null
       }
     };

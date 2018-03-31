@@ -57,7 +57,7 @@
                 type="password" placeholder="Confirm password">
                 <small class="msg-error">
                   <div class="form-control-feedback" *ngIf="signUpForm.get('confirmPassword').touched">
-                    <div [hidden]="!signUpForm.get('confirmPassword').hasError('MatchFields')">
+                    <div [hidden]="!signUpForm.get('confirmPassword').hasError('matchFields')">
                       Passwords did not match
                     </div>
                   </div>
