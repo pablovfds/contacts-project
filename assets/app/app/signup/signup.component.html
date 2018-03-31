@@ -4,37 +4,36 @@
     <div class="card-body">
       <form [formGroup]="signUpForm" (ngSubmit)="registerAccount(signUpForm.value)">
         <div class="form-group" [ngClass]="{
-            'has-danger': !signUpForm.controls['name'].valid,
-            'has-success': signUpForm.controls['name'].valid
-            && signUpForm.controls['name'].dirty }">
+            'has-danger': !signUpForm.get('name').valid,
+            'has-success': signUpForm.get('name').valid && signUpForm.get('name').dirty }">
             <label for="inputName">Name</label>
             <input class="form-control" id="inputName" formControlName="name" type="text" aria-describedby="nameHelp" placeholder="Enter name">
             <small class="msg-error">
-              <div class="form-control-feedback" *ngIf="!signUpForm.controls['name'].valid && signUpForm.controls['name'].touched">
-                <div *ngIf="signUpForm.controls['name'].errors.required">Name is required</div>
-                <div *ngIf="signUpForm.controls['name'].errors.pattern">This name is invalid!</div>
-                <div *ngIf="signUpForm.controls['name'].errors.maxLength">This name is invalid! MAX</div>
-                <div *ngIf="signUpForm.controls['name'].errors.minLength">This name is invalid! MIN</div>
+              <div class="form-control-feedback" *ngIf="!signUpForm.get('name').valid && signUpForm.get('name').touched">
+                <div *ngIf="signUpForm.get('name').hasError('required')">Name is required</div>
+                <div *ngIf="signUpForm.get('name').hasError('pattern')">This name is invalid!</div>
+                <div *ngIf="signUpForm.get('name').hasError('maxLength')">This name is invalid! MAX</div>
+                <div *ngIf="signUpForm.get('name').hasError('minLength')">This name is invalid! MIN</div>
               </div>
             </small>
         </div>
         <div class="form-group">
           <label for="inputEmail">Phone</label>
-          <input class="form-control" id="inputPhone" formControlName="phone" type="phone" aria-describedby="phoneHelp" placeholder="Enter phone">
+          <input class="form-control" id="inputPhone" formControlName="phone" type="phone" aria-describedby="phoneHelp" placeholder="Ex:  (XX) XXXXX-XXXX">
           <small class="msg-error">
-            <div class="form-control-feedback" *ngIf="!signUpForm.controls['phone'].valid && signUpForm.controls['phone'].touched">
-              <div *ngIf="signUpForm.controls['phone'].errors.required">Phone is required</div>
-              <div *ngIf="signUpForm.controls['phone'].errors.pattern">This phone is invalid! Use only numbers</div>
+            <div class="form-control-feedback" *ngIf="!signUpForm.get('phone').valid && signUpForm.get('phone').touched">
+              <div *ngIf="signUpForm.get('phone').hasError('required')">Phone is required</div>
+              <div *ngIf="signUpForm.get('phone').hasError('pattern')">Phone is invalid! Use this pattern: (XX) XXXXX-XXXX</div>
             </div>
           </small>
         </div>
         <div class="form-group">
           <label for="inputEmail">Email address</label>
-          <input class="form-control" id="inputEmail" formControlName="email" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+          <input class="form-control" id="inputEmail" type="email" aria-describedby="emailHelp" placeholder="Enter email" formControlName="email" email="true">
           <small class="msg-error">
-            <div class="form-control-feedback" *ngIf="!signUpForm.controls['email'].valid && signUpForm.controls['email'].touched">
-              <div *ngIf="signUpForm.controls['email'].errors.required">Email is required</div>
-              <div *ngIf="signUpForm.controls['email'].errors.pattern">This email is invalid!</div>
+            <div class="form-control-feedback" *ngIf="!signUpForm.get('email').valid && signUpForm.get('email').touched">
+              <div [hidden]="!signUpForm.get('email').hasError('required')">E-mail is required</div>
+              <div [hidden]="signUpForm.get('email').errors.valid">E-mail format is invalid!</div>
             </div>
           </small>
         </div>
@@ -44,9 +43,11 @@
               <label for="inputPassword">Password</label>
               <input class="form-control" id="inputPassword" formControlName="password" type="password" placeholder="Password">
               <small class="msg-error">
-                <div class="form-control-feedback" *ngIf="!signUpForm.controls['password'].valid && signUpForm.controls['password'].touched">
-                  <div *ngIf="signUpForm.controls['email'].errors.required">Password is required</div>
-                  <div *ngIf="signUpForm.controls['email'].errors.minLength || signUpForm.controls['password'].errors.maxLength">This Password is invalid!</div>
+                <div class="form-control-feedback" *ngIf="!signUpForm.get('password').valid && signUpForm.get('password').touched">
+                  <div [hidden]="!signUpForm.get('password').hasError('required')">Password is required</div>
+                  <div [hidden]="!signUpForm.get('password').hasError('minLength') || !signUpForm.get('password').hasError('maxLength')">
+                    This Password is invalid!
+                  </div>
                 </div>
               </small>
             </div>
@@ -55,8 +56,10 @@
               <input class="form-control" id="inputConfirmPassword" formControlName="confirmPassword"
                 type="password" placeholder="Confirm password">
                 <small class="msg-error">
-                  <div class="form-control-feedback" *ngIf="!signUpForm.controls['confirmPassword'].valid && signUpForm.controls['confirmPassword'].touched">
-                    Passwords did not match
+                  <div class="form-control-feedback" *ngIf="signUpForm.get('confirmPassword').touched">
+                    <div [hidden]="!signUpForm.get('confirmPassword').hasError('MatchFields')">
+                      Passwords did not match
+                    </div>
                   </div>
                 </small>
             </div>
@@ -65,8 +68,7 @@
         <button type="submit" class="btn btn-primary btn-block" [disabled]="!signUpForm.valid">Register</button>
       </form>
       <div class="text-center">
-        <a class="d-block small mt-3" routerLink="/login">Login Page</a>
-        <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+        <a class="d-block small mt-3" routerLink="/login">Already have an account? Sign in</a>
       </div>
     </div>
   </div>
