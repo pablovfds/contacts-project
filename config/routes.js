@@ -22,7 +22,7 @@ module.exports.routes = {
     controller: 'AuthController',
     action: 'login'
   },
-  '/logout': 'AuthController.logout',
+  'get /logout': 'AuthController.logout',
 
   /***************************************************************************
   *                                                                          *
@@ -30,7 +30,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'post /signup': {
+  'post /sign-up': {
     controller	: 'UserController',
     action		: 'create'
   },
@@ -42,7 +42,6 @@ module.exports.routes = {
     controller	: 'UserController',
     action		: 'destroy'
   },
-
   'get /user': {
     cors: {
       origin: '*',

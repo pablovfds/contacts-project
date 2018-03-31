@@ -5,6 +5,8 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+const MessageService = require('../services/MessageService');
+
 module.exports = {
   /**
    * `UserController.signup()`
@@ -24,7 +26,7 @@ module.exports = {
       }
 
       if (user) {
-        res.ok({user: user, token: jwToken.issue({id: user.id})});
+        res.ok({data: user, token: jwToken.issue({id: user.id})}, MessageService.HTTP.CREATED,MessageService.USER.CREATED);
       }
     });
   },

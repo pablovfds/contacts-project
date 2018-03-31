@@ -6,7 +6,7 @@
  * Response body content may or may not be present.
  */
 module.exports = function (data, code, message, root) {
-  var response = _.assign({
+  const response = _.assign({
     code: code || 'CREATED',
     data: data || {}
   }, root);

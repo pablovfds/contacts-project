@@ -12,7 +12,7 @@ import { BasicValidators } from '../shared/basic-validators';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit {
+export class SignUpComponent implements OnInit {
 
   signUpForm: FormGroup;
 
@@ -36,13 +36,15 @@ export class SignupComponent implements OnInit {
   }
 
   registerAccount(value) {
-    console.log(value)
-    // this._userService.signUp().subscribe(
-    //   data => {
-    //
-    //   }, error => {
-    //
-    //   }
-    // );
+    this._userService.signUp(value).subscribe(
+      data => {
+        if (data.code == 201) {
+          this._toastr.success(data.message, 'Success!');
+          this._router.navigate(['/home']);
+        }
+      }, error => {
+        console.error(error)
+      }
+    );
   }
 }

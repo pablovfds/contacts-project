@@ -10,6 +10,7 @@ module.exports = {
   },
 
   USER: {
+    CREATED: "User account created successfully",
     UPDATED: "User account updated successfully",
     DELETED: "User account deleted successfully",
     ERROR_COUNTING_USER: "Server Error, Fail counting users",

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {Auth} from "../../shared/models/auth";
-import {loginUrl} from "../../shared/data.service";
+import {ServerConstants} from "../../shared/constants";
 
 @Injectable()
 export class AuthService {
@@ -19,7 +19,11 @@ export class AuthService {
       password: password
     };
 
-    return this.http.post<Auth>(loginUrl, JSON.stringify(body));
+    return this.http.post<Auth>(ServerConstants.LOGIN_URL, JSON.stringify(body));
+  }
+
+  logout() {
+    return this.http.get(ServerConstants.LOGOUT_URL);
   }
 
   getToken() {
@@ -33,12 +37,7 @@ export class AuthService {
   isAuthenticated() {
     let token = localStorage.getItem(this.tokenKey);
 
-    if (token) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return !!token;
   }
 
   removeToken() {
