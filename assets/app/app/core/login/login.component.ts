@@ -35,7 +35,8 @@ export class LoginComponent implements OnInit {
            if (data && data.token) {
              this._authService.setToken(data.token);
              this._toastr.success(data.message, 'Success!');
-             this._router.navigate(['/home']);
+             // this._router.navigate(['/home']);
+             this._router.navigate(['/admin']);
            }
        }, error => {
          this._toastr.error(error.error.message, 'Error!');

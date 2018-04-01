@@ -40,7 +40,7 @@ export class SignUpComponent implements OnInit {
       data => {
         if (data.code == 201) {
           this._toastr.success(data.message, 'Success!');
-          this._router.navigate(['/home']);
+          this._router.navigate(['/login']);
         }
       }, error => {
         console.error(error)

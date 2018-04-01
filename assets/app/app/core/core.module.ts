@@ -7,9 +7,9 @@ import {AuthService} from "./services/auth.service";
 import {LoginComponent} from "./login/login.component";
 import {SharedModule} from "../shared/shared.module";
 import {CoreRoutingModule} from "./core-routing.module";
-import {HomeComponent} from "../home/home.component";
 import {SignUpComponent} from "../signup/signup.component";
 import {RouterModule} from "@angular/router";
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   imports: [
@@ -21,8 +21,8 @@ import {RouterModule} from "@angular/router";
 
   declarations: [
     LoginComponent,
-    HomeComponent,
-    SignUpComponent
+    SignUpComponent,
+    NotFoundComponent
   ],
   providers: [
     AuthService,
