@@ -32,14 +32,13 @@ export class LoginComponent implements OnInit {
      this._authService.login(value.email, value.password)
        .subscribe(
          data => {
-           if (data && data.token) {
-             this._authService.setToken(data.token);
-             this._toastr.success(data.message, 'Success!');
-             // this._router.navigate(['/home']);
+           if (data && data['token']) {
+             this._authService.setToken(data['token']);
+             this._toastr.success(data['message'], 'Success!');
              this._router.navigate(['/admin']);
            }
        }, error => {
-         this._toastr.error(error.error.message, 'Error!');
+         this._toastr.error(error['error']['message'], 'Error!');
        }
      )
   }

@@ -11,8 +11,8 @@
             <input class="form-control" name="email" id="inputEmail" formControlName="email" type="email" aria-describedby="emailHelp" placeholder="Enter email">
 
             <div class="form-control-feedback" *ngIf="!loginForm.controls['email'].valid && loginForm.controls['email'].touched">
-              <p *ngIf="loginForm.controls['email'].errors.required">Password is required</p>
-              <p *ngIf="loginForm.controls['email'].errors.pattern">This email is invalid!</p>
+              <p *ngIf="loginForm.controls['email'].errors.required">E-mail is required</p>
+              <p *ngIf="loginForm.controls['email'].errors.pattern">This e-mail is invalid!</p>
             </div>
           </div>
           <div class="form-group">
