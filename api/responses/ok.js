@@ -17,6 +17,6 @@ module.exports = function (data, code, message, root) {
 
   this.req._sails.log.silly('Sent (201 CREATED)\n', response);
 
-  this.res.status(201);
+  this.res.status(code);
   this.res.jsonx(response);
 };

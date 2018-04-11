@@ -3,3 +3,6 @@
 ### Local execution
 - npm install
 - npm run start
+
+### Test execution
+- npm test
