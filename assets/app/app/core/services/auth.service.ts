@@ -3,11 +3,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ServerConstants } from "../../shared/constants";
+import {User} from "../../shared/models/user";
 
 @Injectable()
 export class AuthService {
 
   private _tokenKey: string = "token";
+  private _userId: string = "userId";
 
   constructor(private _http: HttpClient) { }
 
@@ -41,6 +43,14 @@ export class AuthService {
 
   removeToken() {
     localStorage.removeItem(this._tokenKey);
+  }
+
+  setUserId(userId: string) {
+    localStorage.setItem(this._userId, userId);
+  }
+
+  getUserId() {
+    return localStorage.getItem(this._userId);
   }
 
 }

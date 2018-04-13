@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
          data => {
            if (data && data['token']) {
              this._authService.setToken(data['token']);
+             this._authService.setUserId(data['user']['id']);
              this._toastr.success(data['message'], 'Success!');
              this._router.navigate(['/admin']);
            }

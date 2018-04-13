@@ -71,7 +71,7 @@
   "scripts": {
     "start": "npm-run-all --parallel open:client dev",
     "start:debug": "npm-run-all --parallel open:client debug",
-    "open:client": "ng serve",
+    "open:client": "ng serve --open",
     "build": "npm run build:prod",
     "build:dev": "ng build --deploy-url=dist",
     "build:prod": "ng build --prod --deploy-url=dist",
