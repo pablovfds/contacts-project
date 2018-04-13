@@ -1,4 +1,16 @@
-var sails = require('sails');
+let sails = require('sails');
+
+global.supertest = require('supertest');
+global.should = require("should");
+
+global.HTTP = {
+  OK: 200,
+  CREATED: 201,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  NOT_FOUND: 404,
+  SERVER_ERROR: 500
+};
 
 // Before running any tests...
 before(function(done) {
@@ -14,6 +26,15 @@ before(function(done) {
     // and disable all logs except errors and warnings:
     hooks: { grunt: false },
     log: { level: 'warn' },
+    models: {
+      connection: 'unitTestConnection',
+      migrate: 'drop'
+    },
+    connections: {
+      unitTestConnection: {
+        adapter: 'sails-disk'
+      }
+    }
 
   }, function(err) {
     if (err) { return done(err); }
