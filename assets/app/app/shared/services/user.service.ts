@@ -6,13 +6,10 @@ import { User } from '../models/user';
 import { Response } from '../models/response';
 import { ServerConstants } from "../constants";
 
-import { AuthService } from '../../core/services/auth.service';
-
 @Injectable()
 export class UserService {
 
-  constructor(private _http: HttpClient,
-              private _authService: AuthService) { }
+  constructor(private _http: HttpClient) { }
 
   signUp(user: any) {
 
@@ -28,14 +25,6 @@ export class UserService {
   }
 
   getUserById(userId: any) {
-    return this._http.get(ServerConstants.USER_URL + '/' + userId, {
-      headers: this._createAuthHeaders()
-    })
+    return this._http.get(ServerConstants.USER_URL + '/' + userId)
   }
-
-
-  private _createAuthHeaders() {
-    return new HttpHeaders({ 'Authorization': 'Bearer ' + this._authService.getToken() });
-  }
-
 }
