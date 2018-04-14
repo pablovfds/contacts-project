@@ -5,7 +5,8 @@
  * @help        :: See https://github.com/auth0/node-jsonwebtoken & http://sailsjs.org/#!/documentation/concepts/Services
  */
 
-var jwt = require('jsonwebtoken'), tokenSecret = "secretissecet";
+var jwt = require('jsonwebtoken');
+var tokenSecret = "6f8bf8a56546611df41e9eeb730b15ecfae715c38adfdbc0ed5296508780a376";
 
 let expiresIn = 60 * 60 * 24 * 7 ; // Expire time 1 week
 

@@ -10,7 +10,12 @@ import { UserService  } from './services/user.service';
   imports: [
     CommonModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      autoDismiss: true
+    }),
     FormsModule,
     ReactiveFormsModule
   ],
