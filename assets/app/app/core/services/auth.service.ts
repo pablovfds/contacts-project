@@ -8,8 +8,9 @@ import {User} from "../../shared/models/user";
 @Injectable()
 export class AuthService {
 
-  private _tokenKey: string = "token";
-  private _userId: string = "userId";
+  private static TOKEN: string = "token";
+  private static USER_ID: string = "userId";
+  private static EXPIRES_IN:string = "expiresIn";
 
   constructor(private _http: HttpClient) { }
 
@@ -27,30 +28,36 @@ export class AuthService {
     return this._http.get(ServerConstants.LOGOUT_URL);
   }
 
-  getToken() {
-    return JSON.parse(localStorage.getItem(this._tokenKey));
+  setSession(authData: any) {
+    localStorage.setItem(AuthService.TOKEN, JSON.stringify(authData['token']));
+    localStorage.setItem(AuthService.USER_ID, authData['user']['id']);
+    localStorage.setItem(AuthService.EXPIRES_IN, JSON.stringify(authData['expire_at']))
   }
 
-  setToken(token) {
-    localStorage.setItem(this._tokenKey, JSON.stringify(token));
+  getToken() {
+    return JSON.parse(localStorage.getItem(AuthService.TOKEN));
   }
 
   isAuthenticated() {
-    let token = localStorage.getItem(this._tokenKey);
+    let token = localStorage.getItem(AuthService.TOKEN);
 
     return token ? true : false;
   }
 
-  removeToken() {
-    localStorage.removeItem(this._tokenKey);
-  }
-
-  setUserId(userId: string) {
-    localStorage.setItem(this._userId, userId);
-  }
-
   getUserId() {
-    return localStorage.getItem(this._userId);
+    return localStorage.getItem(AuthService.USER_ID);
+  }
+
+  isExpiredToken() {
+    let expiresIn = JSON.parse(localStorage.getItem(AuthService.EXPIRES_IN));
+
+    return expiresIn && Date.now() > expiresIn;
+  }
+
+  revokeSession() {
+    localStorage.removeItem(AuthService.TOKEN);
+    localStorage.removeItem(AuthService.USER_ID);
+    localStorage.removeItem(AuthService.EXPIRES_IN);
   }
 
 }

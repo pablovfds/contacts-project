@@ -7,13 +7,15 @@
 
 var jwt = require('jsonwebtoken'), tokenSecret = "secretissecet";
 
+let expiresIn = 60 * 60 * 24 * 7 ; // Expire time 1 week
+
 // Generates a token from supplied payload
 module.exports.issue = function(payload) {
   return jwt.sign(
     payload,
     tokenSecret, // Token Secret that we sign it with
     {
-      expiresIn : 60 * 60 * 24 // Token Expire time
+      expiresIn : expiresIn // Token Expire time
     }
   );
 };
@@ -27,3 +29,7 @@ module.exports.verify = function(token, callback) {
     callback //Pass errors or decoded token to callback
   );
 };
+
+module.exports.getExpireTime = () => {
+  return expiresIn;
+}

@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { AuthService } from '../../core/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../shared/services/user.service';
-import {User} from "../../shared/models/user";
+import { User } from "../../shared/models/user";
 
 
 @Component({
@@ -16,9 +16,9 @@ export class DashboardComponent implements OnInit {
   userProfile: User;
 
   constructor(private _authService: AuthService,
-              private _toastr: ToastrService,
-              private _router: Router,
-              private _userService: UserService) { }
+    private _toastr: ToastrService,
+    private _router: Router,
+    private _userService: UserService) { }
 
   ngOnInit() {
     this.getUserProfile();
@@ -37,16 +37,17 @@ export class DashboardComponent implements OnInit {
   }
 
   logout() {
-    this._authService.logout().subscribe(
-      data => {
-        this._authService.removeToken();
-        this._toastr.success(data["message"], 'Success!');
-        this._router.navigate(['/login']);
-      },
-      error => {
-        this._toastr.error(error.error['message'], 'Error!');
-      }
-    );
+    this._authService.logout()
+      .subscribe(
+        data => {
+          this._authService.revokeSession();
+          this._toastr.success(data["message"], 'Success!');
+          this._router.navigate(['/login']);
+        },
+        error => {
+          this._toastr.error(error.error['message'], 'Error!');
+        }
+      );
   }
 
 }

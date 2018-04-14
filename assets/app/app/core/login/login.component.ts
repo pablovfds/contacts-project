@@ -33,8 +33,7 @@ export class LoginComponent implements OnInit {
        .subscribe(
          data => {
            if (data && data['token']) {
-             this._authService.setToken(data['token']);
-             this._authService.setUserId(data['user']['id']);
+             this._authService.setSession(data)
              this._toastr.success(data['message'], 'Success!');
              this._router.navigate(['/admin']);
            }

@@ -28,7 +28,8 @@ module.exports = {
         return res.send({
           msg: info.message,
           user: user,
-          token: jwToken.issue({id: user.id})
+          token: jwToken.issue({id: user.id}),
+          expire_at: Date.now() + jwToken.getExpireTime()
         });
       });
 
