@@ -4,10 +4,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { UserService  } from './services/user.service';
-import { AuthInterceptor } from './services/auth.interceptor';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
+import { UserService } from './services/user.service';
 
 @NgModule({
   imports: [
@@ -30,12 +27,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     ReactiveFormsModule
   ],
   providers: [
-    UserService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
+    UserService
   ]
 })
 export class SharedModule { }
