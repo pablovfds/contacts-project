@@ -29,7 +29,7 @@ module.exports = {
           msg: info.message,
           user: user,
           token: jwToken.issue({id: user.id}),
-          expire_at: Date.now() + jwToken.getExpireTime()
+          expire_at: jwToken.getExpireTime()
         });
       });
 

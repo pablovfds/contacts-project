@@ -22,7 +22,14 @@ module.exports.routes = {
     controller: 'AuthController',
     action: 'login'
   },
-  'get /logout': 'AuthController.logout',
+  'get /logout': {
+    cors: {
+      origin: '*',
+      headers: 'Content-Type, Authorization'
+    },
+    controller: 'AuthController',
+    action: 'logout'
+  },
 
   /***************************************************************************
   *                                                                          *
@@ -31,31 +38,31 @@ module.exports.routes = {
   ***************************************************************************/
 
   'post /sign-up': {
-    controller	: 'UserController',
-    action		: 'create'
+    controller: 'UserController',
+    action: 'create'
   },
   'put /user/:id': {
-    controller	: 'UserController',
-    action		: 'update'
+    controller: 'UserController',
+    action: 'update'
   },
   'delete /user/:id': {
-    controller	: 'UserController',
-    action		: 'destroy'
+    controller: 'UserController',
+    action: 'destroy'
   },
   'get /user': {
     cors: {
       origin: '*',
       headers: 'Content-Type, Authorization'
     },
-    controller	: 'UserController',
-    action		: 'findAll'
+    controller: 'UserController',
+    action: 'findAll'
   },
   'get /user/:id': {
     cors: {
       origin: '*',
       headers: 'Content-Type, Authorization'
     },
-    controller	: 'UserController',
-    action		: 'find'
+    controller: 'UserController',
+    action: 'find'
   }
 };

@@ -17,7 +17,8 @@ module.exports = {
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
-      photo: User.gravatar(req.body.email)
+      photo: User.gravatar(req.body.email),
+      phone: req.body.phone
     };
 
     User.create(user).exec(function (err, user) {

@@ -3,14 +3,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ServerConstants } from "../../shared/constants";
-import {User} from "../../shared/models/user";
+
+import { User } from "@app/shared/models/user";
+
+import * as moment from "moment";
 
 @Injectable()
 export class AuthService {
 
   private static TOKEN: string = "token";
   private static USER_ID: string = "userId";
-  private static EXPIRES_IN:string = "expiresIn";
+  private static EXPIRES_AT: string = "expires_at";
 
   constructor(private _http: HttpClient) { }
 
@@ -29,9 +32,11 @@ export class AuthService {
   }
 
   setSession(authData: any) {
+    const expiresAt = moment().add(authData['expire_at'], 'second');
+    
     localStorage.setItem(AuthService.TOKEN, JSON.stringify(authData['token']));
     localStorage.setItem(AuthService.USER_ID, authData['user']['id']);
-    localStorage.setItem(AuthService.EXPIRES_IN, JSON.stringify(authData['expire_at']))
+    localStorage.setItem(AuthService.EXPIRES_AT, JSON.stringify(expiresAt.valueOf()));
   }
 
   getToken() {
@@ -48,16 +53,19 @@ export class AuthService {
     return localStorage.getItem(AuthService.USER_ID);
   }
 
-  isExpiredToken() {
-    let expiresIn = JSON.parse(localStorage.getItem(AuthService.EXPIRES_IN));
+  isLoggedIn() {
+    return !moment().isBefore(this.getExpiration());
+  }
 
-    return expiresIn && Date.now() > expiresIn;
+  getExpiration() {
+    const expiration = localStorage.getItem(AuthService.EXPIRES_AT);
+    const expiresAt = JSON.parse(expiration);
+    return moment(expiresAt);
   }
 
   revokeSession() {
     localStorage.removeItem(AuthService.TOKEN);
     localStorage.removeItem(AuthService.USER_ID);
-    localStorage.removeItem(AuthService.EXPIRES_IN);
+    localStorage.removeItem(AuthService.EXPIRES_AT);
   }
-
 }

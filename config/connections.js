@@ -23,16 +23,16 @@ module.exports.connections = {
 
   localDiskDb: {
     adapter: 'sails-disk'
-  }
+  },
 
- //  remoteMongoDb: {
- //    adapter: 'sails-mongo',
- //    url: 'mongodb://admin:admin1234@ds147864.mlab.com:47864/swap-games'
- //  },
- //  localMongoDb: {
- //   adapter: 'sails-mongo',
- //   host: 'localhost', // defaults to `localhost` if omitted
- //   port: 27017, // defaults to 27017 if omitted
- //   database: 'contactsdb' // or omit if not relevant
- // }
+  remoteMongoDb: {
+    adapter: 'sails-mongo',
+    url: 'mongodb://admin:admin1234@ds147864.mlab.com:47864/swap-games'
+  },
+  localMongoDb: {
+   adapter: 'sails-mongo',
+   host: 'localhost', // defaults to `localhost` if omitted
+   port: 27017, // defaults to 27017 if omitted
+   database: 'contactsdb' // or omit if not relevant
+ }
 };

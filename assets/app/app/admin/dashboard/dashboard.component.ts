@@ -3,10 +3,10 @@ import { Router } from "@angular/router";
 
 import { ToastrService } from 'ngx-toastr';
 
-import { AuthService } from '../../core/services/auth.service';
-import { UserService } from '../../shared/services/user.service';
+import { AuthService } from '@app/core/services/auth.service';
+import { UserService } from '@app/shared/services/user.service';
 
-import { User } from "../../shared/models/user";
+import { User } from "@app/shared/models/user";
 
 @Component({
   selector: 'app-dashboard',
@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.userProfile.name = "";
-    this.userProfile.photo = '../../../assets/images/gravatar.png';
+    this.userProfile.photo = '@assets/images/gravatar.png';
     this.getUserProfile();
   }
 
