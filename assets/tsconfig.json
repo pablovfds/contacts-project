@@ -18,7 +18,8 @@
     "baseUrl": "app",
     "paths": {
       "@app/*": ["app/*"],
-      "@assets/*": ["assets/*"]
+      "@assets/*": ["assets/*"],
+      "@env/*": ["environments/*"]
     }
   }
 }

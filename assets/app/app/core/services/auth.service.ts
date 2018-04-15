@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 
-import { ServerConstants } from "../../shared/constants";
+import { environment } from '@env/environment';
 
 import { User } from "@app/shared/models/user";
 
@@ -15,7 +15,11 @@ export class AuthService {
   private static USER_ID: string = "userId";
   private static EXPIRES_AT: string = "expires_at";
 
-  constructor(private _http: HttpClient) { }
+  apiUrl: string;
+
+  constructor(private _http: HttpClient) {
+    this.apiUrl = environment.apiUrl;
+  }
 
   login(username: string, password: string) {
 
@@ -24,11 +28,11 @@ export class AuthService {
       password: password
     };
 
-    return this._http.post(ServerConstants.LOGIN_URL, JSON.stringify(body));
+    return this._http.post(`${this.apiUrl}/login`, JSON.stringify(body));
   }
 
   logout() {
-    return this._http.get(ServerConstants.LOGOUT_URL);
+    return this._http.get(`${this.apiUrl}/logout`);
   }
 
   setSession(authData: any) {

@@ -2,14 +2,20 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { User } from '../models/user';
-import { Response } from '../models/response';
-import { ServerConstants } from "../constants";
+import { User } from '@app/shared/models/user';
+
+import { environment } from '@env/environment';
 
 @Injectable()
 export class UserService {
 
-  constructor(private _http: HttpClient) { }
+  apiUrl: string;
+  apiWithUserUrl: string;
+
+  constructor(private _http: HttpClient) { 
+    this.apiUrl = environment.apiUrl;
+    this.apiWithUserUrl = `${this.apiUrl}/user`;
+  }
 
   signUp(user: any) {
 
@@ -21,10 +27,10 @@ export class UserService {
       photo: ""
     };
 
-    return this._http.post<Response>(ServerConstants.SIGN_UP_URL, body);
+    return this._http.post(`${this.apiUrl}/sign-up`, body);
   }
 
   getUserById(userId: any) {
-    return this._http.get(ServerConstants.USER_URL + '/' + userId)
+    return this._http.get(`${this.apiWithUserUrl}/${userId}`)
   }
 }

@@ -38,8 +38,8 @@ export class SignUpComponent implements OnInit {
   registerAccount(value) {
     this._userService.signUp(value).subscribe(
       data => {
-        if (data.code == 201) {
-          this._toastr.success(data.message, 'Success!');
+        if (data['code'] == 201) {
+          this._toastr.success(data['message'], 'Success!');
           this._router.navigate(['/login']);
         }
       }, error => {
