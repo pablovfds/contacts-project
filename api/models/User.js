@@ -27,6 +27,8 @@ module.exports = {
     photo: {
       type: 'string'
     },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
     toJSON: function () {
       var obj = this.toObject();
       delete obj.password;

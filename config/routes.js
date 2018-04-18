@@ -64,5 +64,9 @@ module.exports.routes = {
     },
     controller: 'UserController',
     action: 'find'
+  },
+  'post /user/forgot': {
+    controller: 'UserController',
+    action: 'forgotPassword'
   }
 };

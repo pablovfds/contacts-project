@@ -33,4 +33,13 @@ export class UserService {
   getUserById(userId: any) {
     return this._http.get(`${this.apiWithUserUrl}/${userId}`)
   }
+
+  forgotPassword(email: string) {
+
+    let body = {
+      email: email
+    }
+
+    return this._http.post(`${this.apiWithUserUrl}/forgot`, body)
+  }
 }
