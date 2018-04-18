@@ -9,19 +9,12 @@ import { UserService } from './services/user.service';
 @NgModule({
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot({
-      timeOut: 2000,
-      positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
-      autoDismiss: true
-    }),
+
     FormsModule,
     ReactiveFormsModule
   ],
   declarations: [],
   exports: [
-    ToastrModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule

@@ -3,9 +3,7 @@
     <div class="card-header">Register an Account</div>
     <div class="card-body">
       <form [formGroup]="signUpForm" (ngSubmit)="registerAccount(signUpForm.value)">
-        <div class="form-group" [ngClass]="{
-            'has-danger': !signUpForm.get('name').valid,
-            'has-success': signUpForm.get('name').valid && signUpForm.get('name').dirty }">
+        <div class="form-group">
             <label for="inputName">Name</label>
             <input class="form-control" id="inputName" formControlName="name" type="text" aria-describedby="nameHelp" placeholder="Enter name">
             <small class="msg-error">
@@ -33,7 +31,7 @@
           <small class="msg-error">
             <div class="form-control-feedback" *ngIf="!signUpForm.get('email').valid && signUpForm.get('email').touched">
               <div [hidden]="!signUpForm.get('email').hasError('required')">E-mail is required</div>
-              <div [hidden]="signUpForm.get('email').errors.valid">E-mail format is invalid!</div>
+              <div [hidden]="signUpForm.get('email').valid">E-mail format is invalid!</div>
             </div>
           </small>
         </div>

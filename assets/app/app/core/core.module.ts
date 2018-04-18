@@ -11,20 +11,27 @@ import { AuthService } from "./services/auth.service";
 import { AuthInterceptor } from './services/auth.interceptor';
 
 import { LoginComponent } from "./login/login.component";
-import { SignUpComponent } from "../signup/signup.component";
 import { NotFoundComponent } from './not-found/not-found.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
     SharedModule,
-    CoreRoutingModule
+    CoreRoutingModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      autoDismiss: true
+    }),
   ],
 
   declarations: [
     LoginComponent,
-    SignUpComponent,
     NotFoundComponent
   ],
   providers: [
@@ -37,7 +44,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     }
   ],
   exports: [
-    RouterModule
+    RouterModule,
+    ToastrModule,
   ]
 })
 export class CoreModule { }
