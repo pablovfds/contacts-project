@@ -4,6 +4,7 @@ import { FormComponent } from './form.component';
 import {SignUpComponent} from "@app/form/signup/signup.component";
 import {SharedModule} from "@app/shared/shared.module";
 import {FormRoutingModule} from "@app/form/form-routing.module";
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   imports: [
@@ -11,6 +12,6 @@ import {FormRoutingModule} from "@app/form/form-routing.module";
     SharedModule,
     FormRoutingModule
   ],
-  declarations: [FormComponent, SignUpComponent]
+  declarations: [FormComponent, SignUpComponent, ForgotPasswordComponent]
 })
 export class FormModule { }

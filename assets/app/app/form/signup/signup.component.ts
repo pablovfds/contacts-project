@@ -17,10 +17,10 @@ export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
 
   constructor(private _userService: UserService,
-              private _toastr: ToastrService,
+              private _toastrService: ToastrService,
               private _router: Router,
-              private _fb: FormBuilder) {
-    this.signUpForm = this._fb.group({
+              private _formBuilder: FormBuilder) {
+    this.signUpForm = this._formBuilder.group({
       'email' : [null, Validators.compose([Validators.required, BasicValidators.email])],
       'name' : [null, Validators.compose([
         Validators.required,
@@ -47,7 +47,7 @@ export class SignUpComponent implements OnInit {
     this._userService.signUp(value).subscribe(
       data => {
         if (data['code'] == 201) {
-          this._toastr.success(data['message'], 'Success!');
+          this._toastrService.success(data['message'], 'Success!');
           this._router.navigate(['/login']);
         }
       }, error => {
