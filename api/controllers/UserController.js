@@ -123,7 +123,10 @@ module.exports = {
         });
       },
       (token, user, done) => {
-        var smtpTransport = nodemailer.createTransport("smtps://pablovitor20@gmail.com:" + encodeURIComponent('daddasd23223210') + "@smtp.gmail.com:465");
+        var smtpTransport = nodemailer.createTransport(
+          "smtps://pablovitor20@gmail.com:" + 
+          encodeURIComponent('21dadaw22') + 
+          "@smtp.gmail.com:465");
 
         var mailOptions = {
           to: user.email,
@@ -131,14 +134,56 @@ module.exports = {
           subject: 'Contacts Project - Password Reset',
           text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
             'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-            'http://' + req.headers.host + '/#/form/reset-password/' + token + '\n\n' +
+            'http://localhost:4200/#/form/reset-password/' + token + '\n\n' +
             'If you did not request this, please ignore this email and your password will remain unchanged.\n'
         };
         smtpTransport.sendMail(mailOptions, (err) => {
-          res.ok({},MessageService.HTTP.OK, 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+          res.ok({}, MessageService.HTTP.OK, 'An e-mail has been sent to ' + user.email + ' with further instructions.');
         });
       }
     ]);
+  },
+
+  resetPassword: (req, res) => {
+    console.log(req.param('token'))
+
+    if (!req.body.password) return res.badRequest({ err: 'Missing password field' })
+
+    async.waterfall([
+      function (done) {
+        User.findOne({ resetPasswordToken: req.param('token') }, function (err, user) {
+          if (!user) {
+            return res.notFound({ 'err': 'Password reset token is invalid or has expired.' });
+          }
+
+          user.password = req.body.password;
+          user.resetPasswordToken = undefined;
+          user.resetPasswordExpires = undefined;
+
+          user.save((err) => {
+              done(err, user);
+          });
+        });
+      },
+      (user, done) => {
+        var smtpTransport = nodemailer.createTransport(
+          "smtps://pablovitor20@gmail.com:" + 
+          encodeURIComponent('sad21232') + 
+          "@smtp.gmail.com:465");
+
+        var mailOptions = {
+          to: user.email,
+          from: 'passwordreset@demo.com',
+          subject: 'Your password has been changed',
+          text: 'Hello,\n\n' +
+            'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+        };
+        smtpTransport.sendMail(mailOptions, function (err) {
+          res.ok({}, MessageService.HTTP.OK, 'Success! Your password has been changed.');  
+        });
+      }
+    ]);
+
   }
 
 };

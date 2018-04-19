@@ -42,4 +42,12 @@ export class UserService {
 
     return this._http.post(`${this.apiWithUserUrl}/forgot`, body)
   }
+
+  resetPassword(token: string, newPassword: string) {
+    let body = {
+      password: newPassword
+    }
+
+    return this._http.post(`${this.apiWithUserUrl}/reset-password/${token}`, body);
+  }
 }

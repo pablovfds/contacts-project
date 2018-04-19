@@ -68,5 +68,9 @@ module.exports.routes = {
   'post /user/forgot': {
     controller: 'UserController',
     action: 'forgotPassword'
+  },
+  'post /user/reset-password/:token': {
+    controller: 'UserController',
+    action: 'resetPassword'
   }
 };

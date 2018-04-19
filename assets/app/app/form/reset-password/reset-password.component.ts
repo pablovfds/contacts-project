@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute} from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UserService } from '@app/shared/services/user.service';
@@ -15,30 +15,38 @@ import { BasicValidators } from '@app/shared/basic-validators';
 export class ResetPasswordComponent implements OnInit {
 
   resetPasswordForm: FormGroup;
-  token: string;
 
-  constructor(private _userService: UserService,
-              private _toastrService: ToastrService,
-              private _router: Router,
-              private _formBuilder: FormBuilder,
-              private _activatedRoute: ActivatedRoute) {
+  constructor(
+    private _userService: UserService,
+    private _toastrService: ToastrService,
+    private _router: Router,
+    private _formBuilder: FormBuilder,
+    private _activatedRoute: ActivatedRoute) {
+      
     this.resetPasswordForm = this._formBuilder.group({
-      'password' : [null, Validators.compose([
+      'password': [null, Validators.compose([
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(100)])],
-      'confirmPassword' : [null, Validators.required]
+      'confirmPassword': [null, Validators.required]
     }, {
-      validator: BasicValidators.Match('password', 'confirmPassword')
-    });
+        validator: BasicValidators.Match('password', 'confirmPassword')
+      });
   }
 
   ngOnInit() {
-    this.token = this._activatedRoute.snapshot.paramMap.get("id");
-    console.log(this.token)
   }
 
   onSubmit(value) {
-    console.log(value)
+    let token = this._activatedRoute.snapshot.paramMap.get("id");
+    this._userService.resetPassword(token, value.password)
+      .subscribe((data) => {
+        if (data['code'] == 200) {
+          this._toastrService.success(data['message'], "Success!");
+          this._router.navigate(['/login']);
+        }
+      }, (err) => {
+        this._toastrService.error(err['err'], 'Error!');
+      });
   }
 }
